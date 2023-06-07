@@ -1,0 +1,74 @@
+.container {
+    display: flex;
+    width: 80vw;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    margin-top: 1vh;
+    height: 10vh;
+    border-radius: 10px; 
+    background-color: rgba(107, 104, 105, 0.75);
+  }
+  
+  
+  .navbar {
+    display: flex;
+    font-size: 2vh;
+    align-items: center;
+    width: 80vw;
+    text-decoration: none;
+    list-style: none;
+    justify-content:space-evenly; 
+ 
+
+  }
+  
+  .divImg{
+    display: flex;
+    margin-right: 1vw;
+    justify-content: flex-end;
+  }
+
+  .divItem{
+    display: flex;
+    width: 20vw;
+    justify-content: space-around;
+    
+  }
+
+
+  .linkNav{
+    text-decoration-line: none;
+  }
+  .image {
+    width: 9vh;
+    height: 9vh;
+    border-radius: 50%;
+  }
+  .divInput{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    border-radius: 7px;
+  }
+  .inputNavbar {
+    border: none;
+    border-radius: 10px;
+    width: 30vw;
+    height: 5vh;
+  }
+  
+  .inputButton {
+    margin-left: 5px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgba(179, 146, 86, 0.74);
+    width: 5vw;
+    height: 5vh;
+    cursor: pointer;
+  }
+  
+  .item {
+    font-size: 4vh;
+    color: black;
+  }
+  

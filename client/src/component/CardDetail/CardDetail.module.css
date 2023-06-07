@@ -1,0 +1,94 @@
+.container {
+    display: flex;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    margin-top: 1vh;
+    margin-bottom: 2vh;
+    border-radius: 10px;
+    height: 40vh;
+    background-color: rgba(107, 104, 105, 0.75);
+    flex-wrap: wrap;
+    padding: 25px 0 0 25px;
+    font-size: 3vh;
+  }
+  
+  .imageDetail {
+    display: flex;
+    height: 30vh;
+    gap: 2.5vw;
+  
+  }
+  
+  .containerImage {
+    display: block;
+    border: 2px solid black;
+    border-radius: 50%;
+    width: 20%;
+    height: 30vh;
+  }
+  
+  .img {
+    border-radius: 50%;
+  
+  }
+  
+  /*  .containerImage img{
+      
+      /* display: block; */
+  /* border-radius: 10px; */
+  
+  p {
+    font-size: 25px;
+    font-weight: bold;
+  }
+  
+  .containerDetail {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 57vw;
+    height: 30vh;
+    border-radius: 10px;
+    border: 2px solid black;
+  }
+  
+  .detalleTitle {
+    display: flex;
+    justify-content: center;
+    color: black;
+    font-weight: bold;
+    font-style: italic;
+    padding-left: 1vh;
+    margin-left: 1vh;
+    margin-right: 2vh;
+    border-radius: 10px;
+    background-color: rgba(107, 104, 105, 0.75);
+      
+  }
+  
+  .detalleItem {
+    display: flex;
+    padding-left: 1vh;
+    margin-left: 1vh;
+    margin-right: 2vh;
+    border-radius: 10px;
+    background-color: rgba(107, 104, 105, 0.75);
+  }
+
+  .btnPaginado {
+    display: flex;
+    width: 150px;
+    align-items: center;
+    margin-left: 40vw;
+    margin-right: 40vw;
+  }
+  
+
+  .boton {
+    width: 2000px;
+    height: 50px;
+    border-radius: 7px;
+    background-color: rgba(179, 146, 86, 0.74);
+    font-weight: bold;
+    cursor: pointer;
+  }
