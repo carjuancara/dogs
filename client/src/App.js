@@ -10,8 +10,8 @@ import NewRaza from './component/NewRaza/NewRaza';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllDogs, getTemperaments, updateLoadDog } from './redux/actions';
 import { useEffect, useState } from 'react';
-axios.defaults.baseURL = 'https://pi-dog-production-bab3.up.railway.app/'
-//axios.defaults.baseURL = 'http://localhost:3001/'
+//axios.defaults.baseURL = 'https://pi-dog-production-bab3.up.railway.app/'
+axios.defaults.baseURL = 'http://localhost:3001/'
 
 function App() {
   const LIMIT = 8;
