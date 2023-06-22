@@ -7,6 +7,7 @@ import Filter from './component/Filter/Filter';
 import Cards from './component/Cards/Cards';
 import CardDetail from './component/CardDetail/CardDetail';
 import NewRaza from './component/NewRaza/NewRaza';
+import Atribuciones from './component/Atribuciones/Atribuciones';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllDogs, getTemperaments, updateLoadDog } from './redux/actions';
 import { useEffect, useState } from 'react';
@@ -83,8 +84,12 @@ function App() {
         <NavBar />
         <NewRaza />
       </Route>
+      <Route path='/atribuciones'>
+        <NavBar />
+        <Atribuciones />
+      </Route>
     </div>
   );
 }
-
+///atribuciones
 export default App;
