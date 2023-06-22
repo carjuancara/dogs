@@ -1,137 +1,150 @@
-.container{
-    display: flex;
-    margin-top: 5vh;
-    margin-left: 30vw;
-    margin-right: 10vw;
-    width: 41vw;
-    height: 79vh;
-    border-radius: 10px;
-    background-color: rgba(107, 104, 105, 0.75);
-}
-.description{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 38vw;
-    height: 75vh;
-    border-radius: 10px;
+.container {
+  display: flex;
+  margin-top: 3vh;
+  padding-top: 2vh;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  justify-content: center;
+  width: 80vw;
+  height: 79vh;
+  border-radius: 10px;
+  background-color: var(--color-secondary);
 }
 
-.h1NewDog{
-    margin-top: 1vh;
+.container_raza {
+  display: flex;
+  flex-direction: column;
+  width: 715px;
+  height: 700px;
 }
-.detail{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    margin-left: 1vw;
-    margin-right: 1vw;
-    width: 36vw;
-    height: 40vh;
-    border-radius: 10px;
-}
-.subDetail{
-    display: flex;
-    justify-content: stretch;
-    gap: 1.5vh;
-    margin-top: 1vh;
-    margin-left: 1vw;
-    margin-right: 1vh;
-    height: 3vh;
-    width: 34vw;
-    /* border: 1px solid green; */
-}
-.detailName{
-width: 7vw;
-border-radius: 10px;
-border: 1px solid black;
-}
-.detailInput{
-width: 20vw;
-height: 3vh;
-border-radius: 10px;
-/* border: 1px solid red; */
-}
-.formTemperaments{
-    display: flex;
-    justify-content: flex-start;
-    margin-left: 1vw;
-    width: 36vw;
-    height: 5vh;   
-    border-radius: 10px;
-/*     border: 1px solid coral; */
-}
-.formTemperaments .btn{
-    width: 5vw;
-}
-.containerBtn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 12vw;
-    margin-right: 1vw;
-    margin-left: 1vw;   
-    height: 1vh;
-    border-radius: 10px;
-    
-}
-.btn{
-    width: inherit;
-    height: 50px;
-    border-radius: 7px;
-    background-color: rgba(179, 146, 86, 0.74);
-    font-weight: bold;
-    cursor: pointer;
-    
-}
-.temperaments{
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.addTemperaments{
-    display: flex;
-    justify-content: space-evenly;
-    align-content: space-evenly;
-    flex-wrap: wrap;
-    margin-left: 1vw;
-    width: 36vw;
-    height: 17vh;
-    border: 1px solid black;
-    border-radius: 10px;
-}
-.addTemperaments .btn{
-    width: 100px;
-    height: 50px;
 
+.titulo {
+  width: 715px;
+  height: 36px;
 }
-.addTemperaments .btn:hover{
-    opacity: 0.6;
-    color: rgba(179, 146, 86, 0.74);
-    background-color: black;
 
+.container_info {
+  display: flex;
+  justify-content: space-around;
+  width: 720px;
+  height: 300px;
 }
-.ErrorContainer{
-    display: flex;
-    justify-content:space-between;
-    align-items: center;
+.container_image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 300px;
+  width: 232px;
 }
-.danger{
-    margin-left: 10px;
-    width: 130px;
-    font-size: 17px;
-    padding-left: 5px;
-    padding-right: 5px;
-    border: 2px solid red;
- 
+
+.container_image img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 232px;
+  height: 232px;
+  border-radius: 50%;
 }
-.btnSubmit{
-    width: 200px;
-    height: 50px;
-    border-radius: 7px;
-    background-color: rgba(179, 146, 86, 0.74);
-    font-weight: bold;
-    cursor: pointer;
-    
+
+.container_boton {
+  display: flex;
+  font-weight: bold;
+  font-size: 22px;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 36px;
+  border-radius: 10px;
+  background-color: var(--boton-fondo);
+}
+
+.container_boton :hover{
+  cursor: pointer;
+}
+
+.container_detalle {
+  display: flex;
+  margin-top: 10px;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  height: 232px;
+}
+
+.container_detalle_input {
+  display: flex;
+  margin-top: 10px;
+  justify-content: space-between;
+  width: 377px;
+  height: 36px;
+}
+
+.input_name {
+  width: 377px;
+  height: 36px;
+}
+
+.detalle_input {
+  width: 174px;
+  height: 36px;
+}
+
+.container_temperament {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  width: 660px;
+  height: 270px;
+}
+
+.container_save {
+  display: flex;
+  margin-left: 2vh;
+  justify-content: flex-end;
+  width: 660px;
+  height: 36px;
+}
+
+.h1NewDog {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.addTemperaments {
+  display: flex;
+  justify-content: space-evenly;
+  align-content: space-evenly;
+  flex-wrap: wrap;
+  margin-left: 1vw;
+  width: 36vw;
+  height: 17vh;
+  background-color: var(--color-primary);
+  border-radius: 10px;
+}
+
+.addTemperaments .btn {
+  width: 100px;
+  height: 50px;
+}
+.formTemperaments {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 1vw;
+  width: 36vw;
+  height: 5vh;  
+}
+
+select {
+  border-radius: 10px;
+}
+
+.btn {
+  width: inherit;
+  height: 50px;
+  border-radius: 10px;
+  background-color: var(--boton-fondo);
+  font-weight: bold;
+  cursor: pointer;
 }
