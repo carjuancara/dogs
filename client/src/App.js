@@ -91,5 +91,5 @@ function App() {
     </div>
   );
 }
-///atribuciones
+
 export default App;
