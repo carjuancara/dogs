@@ -1,96 +1,100 @@
 .container {
-    display: flex;
-    width: 80vw;
-    margin-left: 10vw;
-    margin-right: 10vw;
-    margin-top: 1vh;
-    height: 10vh;
-    border-radius: 10px;
-    background-color: rgba(107, 104, 105, 0.75);
-  }
-  
-  .formFilter {
-    display: flex;
-    font-weight: bold;
-    color: black
-  }
-  
-  .filters {
-    display: flex;
-    font-size: 2vh;
-    align-items: center;
-    width: 80vw;
-    text-decoration: none;
-    list-style: none;
-    justify-content: space-evenly;
-  }
-  
-  .title {
-    font-size: 4vh;
-    color: black;
-    font-weight: bold;
-    
-  }
-  
-  .divImg {
-    display: flex;
-    margin-right: 1vw;
-    justify-content: flex-end;
-  }
-  
-  .divItem {
-    display: flex;
-    width: 20vw;
-    justify-content: space-around;
-  
-  }
-  
-  .filterNameAscDes {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .filterAscDes {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .linkNav {
-    border: 1px solid blue;
-    text-decoration-line: none;
-  }
-  
-  .image {
-    width: 10vh;
-    height: 10vh;
-  
-  }
-  
-  .divInput {
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    border-radius: 7px;
-  }
-  
-  .inputNavbar {
-    border: none;
-    border-radius: 10px;
-    width: 30vw;
-    height: 5vh;
-  }
-  
-  .btn {
-    margin-left: 5px;
-    border: none;
-    border-radius: 10px;
-    background-color: rgba(179, 146, 86, 0.74);
-    width: 5vw;
-    height: 5vh;
-    cursor: pointer;
-  }
-  
-  .item {
-    font-size: 4vh;
-  
-  }
+  display: flex;
+  width: 80vw;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  margin-top: 1vh;
+  height: 10vh;
+  border-radius: 10px;
+  background-color: var(--color-secondary);
+  /* background-color: rgba(107, 104, 105, 0.75); */
+}
+
+.formFilter {
+  display: flex;
+  font-weight: bold;
+  color: black;
+}
+
+.filters {
+  display: flex;
+  font-size: 2vh;
+  align-items: center;
+  width: 80vw;
+  text-decoration: none;
+  list-style: none;
+  justify-content: space-evenly;
+}
+
+.title {
+  font-size: 4vh;
+  color: black;
+  font-weight: bold;
+}
+
+.divImg {
+  display: flex;
+  margin-right: 1vw;
+  justify-content: flex-end;
+}
+
+.divItem {
+  display: flex;
+  width: 20vw;
+  justify-content: space-around;
+}
+
+.filterNameAscDes {
+  display: flex;
+  gap: 10px;
+}
+
+.filterAscDes {
+  display: flex;
+  flex-direction: column;
+}
+
+.linkNav {
+  text-decoration-line: none;
+}
+
+.image {
+  width: 10vh;
+  height: 10vh;
+}
+
+.divInput {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  border-radius: 7px;
+}
+
+.inputNavbar {
+  border: none;
+  border-radius: 10px;
+  width: 30vw;
+  height: 5vh;
+}
+
+.btn {
+  margin-left: 5px;
+  font-weight: bold;
+  border-radius: 10px;
+  background-color: var(--boton-fondo);
+  padding: 0 10px;
+  width: 8vw;
+  height: 5vh;
+  cursor: pointer;
+}
+
+.item {
+  font-size: 4vh;
+}
+
+select {
+  background-color: var(--color-primary);
+}
+select option {
+  background-color: var(--color-primary);
+}

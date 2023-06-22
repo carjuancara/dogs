@@ -68,9 +68,9 @@ export default function Filter() {
         </form>
         <form action="#" className={s.formFilter} >
           <select name="origin" id="origin">
-            <option key={1} id='originALL'value="ALL" onClick={handleSubmitOrigin} >ORIGIN BY: ALL</option>
-            <option key={2} id='originApiID'value="ApiID" onClick={handleSubmitOrigin} >ORIGIN BY: API</option>
-            <option key={3} id='originId'value="id" onClick={handleSubmitOrigin} >ORIGIN BY: DB</option>
+            <option key={1} id='originALL'value="ALL" onClick={handleSubmitOrigin} >Origin By: ALL</option>
+            <option key={2} id='originApiID'value="ApiID" onClick={handleSubmitOrigin} >Origin By: API</option>
+            <option key={3} id='originId'value="id" onClick={handleSubmitOrigin} >Origin By: DB</option>
           </select>
         </form>
         <form action="#" className={s.formFilter} >
