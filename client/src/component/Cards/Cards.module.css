@@ -1,14 +1,13 @@
 .container {
     display: flex;
     margin-top: 1vh;
-    margin-bottom: 2vh;
     margin-left: 10vw;
     margin-right: 10vw;
-    padding-left: 20px;
     border-radius: 10px;
+    width: 80vw;
     height: 65vh;
-    background-color: rgba(107, 104, 105, 0.75);
+    background-color: var(--color-secondary);
     flex-wrap: wrap;
-    padding: 15px 0 0 15px;
+    padding: 30px 0 0 40px;
     gap: 10px;
 }
