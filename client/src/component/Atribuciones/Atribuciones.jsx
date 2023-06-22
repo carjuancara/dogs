@@ -9,7 +9,7 @@ export default function Atribuciones() {
           <div className={s.detail_atribuciones}>
             <p>
               Todas las fotos pertenecen a sus respectivos propietarios, aqui se
-              hacen las respectivas atribuciones a cada uno de ellos Foto de{" "}
+              hacen las respectivas atribuciones a cada uno de ellos.
             </p>
 
             <a href="https://unsplash.com/es/fotos/2k6v10Y2dIg?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank" rel="noopener noreferrer">
@@ -21,6 +21,7 @@ export default function Atribuciones() {
             <a href="https://unsplash.com/es/fotos/NE0XGVKTmcA?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank" rel="noopener noreferrer">
               Foto de Karsten Winegeart en Unsplash
             </a>
+            <a target="_blank" rel="noopener noreferrer" href="https://icons8.com/icon/7tuPVSyL8yYC/parque-para-perros">Parque para perro de Icons8</a>
           </div>
         </div>
       </div>
