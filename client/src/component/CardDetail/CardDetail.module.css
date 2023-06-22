@@ -2,40 +2,37 @@
     display: flex;
     margin-left: 10vw;
     margin-right: 10vw;
-    margin-top: 1vh;
+    margin-top: 2vh;
     margin-bottom: 2vh;
     border-radius: 10px;
-    height: 40vh;
-    background-color: rgba(107, 104, 105, 0.75);
-    flex-wrap: wrap;
-    padding: 25px 0 0 25px;
+    height: 65vh;
+    width: 80vw;
+    background-color: var(--color-secondary);
+    flex-wrap: wrap; 
+    justify-content: center;
     font-size: 3vh;
+    
   }
   
   .imageDetail {
     display: flex;
-    height: 30vh;
+    width: 75vw;
+    height: 55vh;
     gap: 2.5vw;
-  
   }
   
   .containerImage {
     display: block;
-    border: 2px solid black;
-    border-radius: 50%;
-    width: 20%;
-    height: 30vh;
+    margin: 3vw 4vw ;
+    border: 3px solid var(--boton-fondo);
+    border-radius: 25%;
+    width: 25%;
+    height: 40vh;
   }
   
   .img {
-    border-radius: 50%;
-  
+    border-radius: 25%;
   }
-  
-  /*  .containerImage img{
-      
-      /* display: block; */
-  /* border-radius: 10px; */
   
   p {
     font-size: 25px;
@@ -44,17 +41,17 @@
   
   .containerDetail {
     display: flex;
+    margin-top: 2vh;
     flex-direction: column;
     justify-content: space-evenly;
     width: 57vw;
-    height: 30vh;
+    height: 50vh;
     border-radius: 10px;
-    border: 2px solid black;
   }
   
   .detalleTitle {
     display: flex;
-    justify-content: center;
+    justify-content:flex-start;
     color: black;
     font-weight: bold;
     font-style: italic;
@@ -62,33 +59,23 @@
     margin-left: 1vh;
     margin-right: 2vh;
     border-radius: 10px;
-    background-color: rgba(107, 104, 105, 0.75);
-      
+    background-color: var(--color-primary);
   }
   
   .detalleItem {
     display: flex;
+    justify-content: flex-start;
     padding-left: 1vh;
     margin-left: 1vh;
     margin-right: 2vh;
     border-radius: 10px;
-    background-color: rgba(107, 104, 105, 0.75);
+    background-color: var(--color-primary);
   }
 
   .btnPaginado {
     display: flex;
-    width: 150px;
     align-items: center;
     margin-left: 40vw;
     margin-right: 40vw;
   }
   
-
-  .boton {
-    width: 2000px;
-    height: 50px;
-    border-radius: 7px;
-    background-color: rgba(179, 146, 86, 0.74);
-    font-weight: bold;
-    cursor: pointer;
-  }
