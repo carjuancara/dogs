@@ -14,7 +14,7 @@ const initialState = {
   filterName: "ASC",
   filterOrigin: "ALL",
   limit: 8,
-  offset:0
+  offset: 0
 }
 
 function RootReducer(state = initialState, action) {
@@ -39,7 +39,7 @@ function RootReducer(state = initialState, action) {
             if (a.weight > b.weight) return -1
             return 0
           }),
-        filterWeight:action.payload
+        filterWeight: action.payload
       }
     case GET_TEMPERAMENTS:
       return {
@@ -76,7 +76,7 @@ function RootReducer(state = initialState, action) {
       return {
         ...state,
         allDog: action.payload === 'ALL' ? state.allDog = state.backupDog : state.allDog?.filter(d => d.temperament?.includes(action.payload)),
-        filterTemperaments:action.payload,
+        filterTemperaments: action.payload,
       }
     case RESTORE_ALL_DOG:
       return {
@@ -98,7 +98,7 @@ function RootReducer(state = initialState, action) {
             if (a.name > b.name) return -1
             return 0
           }),
-        filterName:action.payload
+        filterName: action.payload
       }
     case FILTER_BY_ORIGIN:
       return {
@@ -107,8 +107,8 @@ function RootReducer(state = initialState, action) {
           return d.ApiID
         }) : state.allDog.filter(d => {
           return d.id
-        }), 
-        filterOrigin:action.payload
+        }),
+        filterOrigin: action.payload
       }
 
     default:

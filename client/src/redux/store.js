@@ -1,12 +1,10 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import rootReducer from "./reducer.js";
-import thunk from "redux-thunk";
+import { configureStore } from '@reduxjs/toolkit';
+import { brandSlice } from './brandSlice';
 
+const store = configureStore({
+    reducer: {
+        brand: brandSlice
+    }
+});
 
-
-const store = createStore(
-    rootReducer,
-    compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
-);
-
-export default store;
+export default store
