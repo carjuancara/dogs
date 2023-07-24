@@ -11,7 +11,7 @@ import Atribuciones from './component/Atribuciones/Atribuciones';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllDogs, getTemperaments, updateLoadDog } from './redux/actions';
 import { useEffect, useState } from 'react';
-axios.defaults.baseURL = 'https://pi-dog-production-bab3.up.railway.app/'
+axios.defaults.baseURL = 'https://dogserver2.onrender.com'
 //axios.defaults.baseURL = 'http://localhost:3001/'
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
   const INITIALSTATE = 0;
   const [offset, setOffset] = useState(INITIALSTATE)
   const allDogs = useSelector(state => state.allDog)
-  const cantDog = useSelector(state => state.loadDog.length)
+  const cantDog = useSelector(state => state.loadDog)
   const filterTemperaments = useSelector(state => state.filterTemperaments)
   const filterName = useSelector(state => state.filterName)
   const filterWeight = useSelector(state => state.filterWeight)
