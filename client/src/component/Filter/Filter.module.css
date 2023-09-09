@@ -3,17 +3,15 @@
   width: 80vw;
   margin-left: 10vw;
   margin-right: 10vw;
-  margin-top: 1vh;
-  height: 10vh;
+  height: 8vh;
   border-radius: 10px;
-  background-color: var(--color-secondary);
-  /* background-color: rgba(107, 104, 105, 0.75); */
+
 }
 
 .formFilter {
   display: flex;
   font-weight: bold;
-  color: black;
+  color: white
 }
 
 .filters {
@@ -28,7 +26,7 @@
 
 .title {
   font-size: 4vh;
-  color: black;
+  color: white;
   font-weight: bold;
 }
 
@@ -93,8 +91,10 @@
 }
 
 select {
-  background-color: var(--color-primary);
+ /*  background-color: var(--color-primary); */
+color: #202020;
 }
 select option {
-  background-color: var(--color-primary);
+  /* background-color: var(--color-primary); */
+  color: #202020;
 }
