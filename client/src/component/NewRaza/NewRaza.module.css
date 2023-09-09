@@ -1,21 +1,21 @@
 .container {
   display: flex;
-  margin-top: 3vh;
-  padding-top: 2vh;
-  margin-left: 10vw;
-  margin-right: 10vw;
-  justify-content: center;
-  width: 80vw;
+  margin-top: 2vh;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  justify-content: flex-start;
+  width: 90vw;
   height: 79vh;
   border-radius: 10px;
-  background-color: var(--color-secondary);
+  color: #202020;
+  border: 3px solid gray;
 }
 
 .container_raza {
   display: flex;
   flex-direction: column;
-  width: 715px;
-  height: 700px;
+  width: 730px;
+  height: 550px;
 }
 
 .titulo {
@@ -26,15 +26,16 @@
 .container_info {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   width: 720px;
-  height: 300px;
+  height: 450px;
 }
 .container_image {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  height: 300px;
+  height: 295px;
   width: 232px;
 }
 
@@ -44,11 +45,12 @@
   justify-content: center;
   width: 232px;
   height: 232px;
-  border-radius: 50%;
+  border-radius: 15%;
 }
 
 .container_boton {
   display: flex;
+  margin-top: 1vh;
   font-weight: bold;
   font-size: 22px;
   justify-content: center;
@@ -56,58 +58,71 @@
   width: 200px;
   height: 36px;
   border-radius: 10px;
+  color: white;
   background-color: var(--boton-fondo);
 }
 
-.container_boton :hover{
+.container_boton :hover {
   cursor: pointer;
 }
 
 .container_detalle {
   display: flex;
-  margin-top: 10px;
   flex-direction: column;
   align-items: center;
   width: 400px;
-  height: 232px;
+  height: 432px;
+  background-color: gray;
 }
-
+.container_detalle_nombre {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  width: 377px;
+}
 .container_detalle_input {
   display: flex;
-  margin-top: 10px;
+  margin: 20px 0;
   justify-content: space-between;
   width: 377px;
-  height: 36px;
 }
 
 .input_name {
   width: 377px;
   height: 36px;
+  border-radius: 5px;
 }
-
+.danger {
+  font-size: 15px;
+  color: red;
+  width: 100px;
+}
 .detalle_input {
-  width: 174px;
-  height: 36px;
+  width: 177px;
+  height: 30px;
+  border-radius: 5px;
 }
 
 .container_temperament {
   display: flex;
+  justify-content: center;
   flex-direction: column;
-  justify-content: space-around;
   align-items: flex-start;
-  width: 660px;
-  height: 270px;
+  width: inherit;
+  height: 370px;
+  gap: 10px;
 }
 
 .container_save {
   display: flex;
-  margin-left: 2vh;
+  align-items: center;
+  margin-top: 2vh;
   justify-content: flex-end;
-  width: 660px;
+  width: 600px;
   height: 36px;
 }
 
-.h1NewDog {
+.h2NewDog {
   font-size: 32px;
   font-weight: bold;
 }
@@ -117,10 +132,11 @@
   justify-content: space-evenly;
   align-content: space-evenly;
   flex-wrap: wrap;
-  margin-left: 1vw;
+  margin-left: 2vw;
   width: 36vw;
-  height: 17vh;
-  background-color: var(--color-primary);
+  height: 27vh;
+  background-color: white;
+  color: #202020;
   border-radius: 10px;
 }
 
@@ -130,14 +146,19 @@
 }
 .formTemperaments {
   display: flex;
-  justify-content: flex-start;
-  margin-left: 1vw;
-  width: 36vw;
-  height: 5vh;  
+  margin-left: 30px;
+  width: 200px;
+  height: 6vh;
 }
-
-select {
+.container_input {
+  display: flex;
+  flex-direction: column;
+}
+#temperaments {
+  margin-top: 50px;
   border-radius: 10px;
+  width: 200px;
+  height: 36px;
 }
 
 .btn {
@@ -146,5 +167,14 @@ select {
   border-radius: 10px;
   background-color: var(--boton-fondo);
   font-weight: bold;
+  color: white;
   cursor: pointer;
+}
+/* .danger{
+  border:red;
+} */
+.etiqueta {
+  height: 10px;
+  width: 200px;
+  background-color: blueviolet;
 }
