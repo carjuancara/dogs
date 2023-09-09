@@ -15,9 +15,6 @@ export default function Atribuciones() {
             <a href="https://unsplash.com/es/fotos/2k6v10Y2dIg?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank" rel="noopener noreferrer">
               Mia Anderson en Unsplash
             </a>
-            <a href="https://unsplash.com/es/fotos/CLyKy1xvjJc?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank" rel="noopener noreferrer">
-              Foto de Gaëtan Werp en Unsplash
-            </a>
             <a href="https://unsplash.com/es/fotos/NE0XGVKTmcA?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank" rel="noopener noreferrer">
               Foto de Karsten Winegeart en Unsplash
             </a>
