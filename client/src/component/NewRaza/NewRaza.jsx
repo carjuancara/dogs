@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useDogStore } from "../../store/dogStore-origin";
 import s from "./NewRaza.module.css";
-import { useSelector } from "react-redux";
+import axios from "axios";
 import image from "../../image/icono.jpg";
 
 export default function NewRaza() {
-  const temperaments = useSelector((state) => state.temperaments);
+  const { temperaments } = useDogStore();
   const [error, setError] = useState({});
-  const [images, setImages] = useState({});
-  const [imageToRemove, setImageToRemove] = useState(false);
+  const [showSelectError, setShowSelectError] = useState(false);
   const [input, setInput] = useState({
     name: "",
     image: "",
@@ -36,6 +35,7 @@ export default function NewRaza() {
           year_max,
           temperaments,
         } = input;
+
         const result = await axios.post("/dogs", {
           name,
           image,
@@ -50,13 +50,24 @@ export default function NewRaza() {
         return result;
       };
       if (Object.entries(error).length > 0) {
-        alert("ERROR: Data entry is missing");
+        alert("ERROR: Faltan datos");
       } else {
         const message = await newDog();
         alert(message.data.message);
+        setInput({
+          name: "",
+          image: "",
+          weight_min: 0,
+          weight_max: 0,
+          height_min: 0,
+          height_max: 0,
+          year_min: 0,
+          year_max: 0,
+          temperaments: [],
+        });
       }
     } catch (err) {
-      alert("error");
+      alert("Error");
     }
   };
 
@@ -77,43 +88,38 @@ export default function NewRaza() {
 
   const handleSubmitAdd = (e) => {
     e.preventDefault();
-    const temperament = {
-      id: document.getElementById("temperaments").options[
-        document.getElementById("temperaments").selectedIndex
-      ].id,
-      value:
-        document.getElementById("temperaments").options[
-          document.getElementById("temperaments").selectedIndex
-        ].value,
-    };
-    //console.log(temperament)
-    // VALIDA QUE NO HAYA REPETIDOS
-    if (temperament.id !== "0") {
-      const findTemperament = input.temperaments.find(
-        (t) => t.id === temperament.id
+    const temperamentId = parseInt(e.target.value);
+
+    const yaAgregado = input.temperaments
+      ? input.temperaments.some(
+          (temperamento) => temperamento.id === temperamentId
+        )
+      : null;
+
+    if (!yaAgregado && temperamentId !== 0) {
+      const temperamentoSeleccionado = temperaments.find(
+        (temperamento) => temperamento.id === temperamentId
       );
-      //console.log(findTemperament)
-      if (!findTemperament) {
-        setInput((input) => ({
-          ...input,
-          temperaments: [...input.temperaments, temperament],
-        }));
-      }
+
+      setInput((inputAnterior) => ({
+        ...inputAnterior,
+        temperaments: [...inputAnterior.temperaments, temperamentoSeleccionado],
+      }));
+    }
+    if (showSelectError) {
+      setShowSelectError(false);
     }
   };
 
-  const hanlerClose = (e) => {
-    e.preventDefault();
-    if (input.temperaments.length === 0) {
-      error.temperaments = "temperaments is required";
-    }
-    setInput((input) => ({
-      ...input,
-      temperaments: input.temperaments.filter(
-        (d) => d.value !== e.target.value
+  const hanlerClose = (temperamentoId) => {
+    setInput((prevInput) => ({
+      ...prevInput,
+      temperaments: prevInput.temperaments.filter(
+        (temperamento) => temperamento.id !== temperamentoId
       ),
     }));
   };
+
   const handleOpenWidget = async (e) => {
     e.preventDefault();
     const previewImage = document.getElementById("preview-image");
@@ -126,9 +132,11 @@ export default function NewRaza() {
         if (!error && result && result.event === "success") {
           const imageUrl = result.info.url;
 
-          // Actualiza la imagen en el DOM
-          input.image = imageUrl;
-          setImages(imageUrl);
+          setInput((prevInput) => ({
+            ...prevInput,
+            image: imageUrl,
+          }));
+
           previewImage.src = imageUrl;
           previewImage.alt = "Vista previa de la imagen";
         }
@@ -141,127 +149,115 @@ export default function NewRaza() {
   function validate(input) {
     let error = {};
 
-    // validate NAME
-    // should be just letters
     if (!input.name) {
-      error.name = "is required";
+      error.name = "es requerido";
     } else if (
       /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/\+~%\/.\w-_]*)?\??(?:\+=&;%@.\w_]*)#?(?:[\w]*))?)/.test(
         input.name
       )
     ) {
-      error.name = "is invalid";
+      error.name = "es inválido";
     }
 
-    // validate WEIGHT_MIN
-    // only integer between 1 and 100
     if (!input.weight_min) {
-      error.weight_min = "Is required";
+      error.weight_min = "es requerido";
     } else if (!/[0-9]+/i.test(input.weight_min)) {
-      error.weight_min = "is invalid";
+      error.weight_min = "es inválido";
     } else {
       if (input.weight_min < 1 || input.weight_min > 100) {
-        error.weight_min = "range 1 to 100";
+        error.weight_min = "rango de 1 a 100";
       }
     }
 
-    // validate WEIGHT_MAX
-    // only integer between 1 and 100
     if (!input.weight_max) {
-      error.weight_max = "is required";
+      error.weight_max = "es requerido";
     } else if (!/[0-9]+/i.test(input.weight_max)) {
-      error.weight_max = "is invalid";
+      error.weight_max = "es inválido";
     } else {
       if (input.weight_max < 1 || input.weight_max > 100) {
-        error.weight_max = "range 1 to 100";
+        error.weight_max = "rango de 1 a 100";
       }
     }
 
-    if (!input.image) {
-      error.image = "is required";
-    } else if (
-      /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+(\\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/.test(
-        input.image
-      )
-    ) {
-      error.image = "is invalid";
-    }
-
-    if (input.temperaments.length === 0) {
-      error.temperaments = ["is clean"];
+    if (!showSelectError) {
+      setShowSelectError(false);
     }
 
     if (!input.year_min) {
-      error.year_min = "is required";
+      error.year_min = "es requerido";
     } else if (!/[0-9]+/i.test(input.year_min)) {
-      error.year_min = "is invalid";
+      error.year_min = "es inválido";
     } else {
       if (input.year_min < 1 || input.year_min > 50) {
-        error.year_min = "range 1 to 50";
+        error.year_min = "rango de 1 a 50";
       }
     }
 
     if (!input.year_max) {
-      error.year_max = "is required";
+      error.year_max = "es requerido";
     } else if (!/[0-9]+/i.test(input.year_max)) {
-      error.year_max = "is invalid";
+      error.year_max = "es inválido";
     } else {
       if (input.year_max < 1 || input.year_max > 50) {
-        error.year_max = "range 1 to 50";
+        error.year_max = "rango de 1 a 50";
       }
     }
 
     if (!input.height_min) {
-      error.height_min = "is required";
+      error.height_min = "es requerido";
     } else if (!/[0-9]+/i.test(input.height_min)) {
-      error.height_min = "is invalid";
+      error.height_min = "es inválido";
     } else {
       if (input.height_min < 1 || input.height_min > 100) {
-        error.height_min = "range 1 to 100";
+        error.height_min = "rango de 1 a 100";
       }
     }
+
     if (!input.height_max) {
-      error.height_max = "is required";
+      error.height_max = "es requerido";
     } else if (!/[0-9]+/i.test(input.height_max)) {
-      error.height_max = "is invalid";
+      error.height_max = "es inválido";
     } else {
       if (input.height_max < 1 || input.height_max > 100) {
-        error.height_max = "range 1 to 100";
+        error.height_max = "rango de 1 a 100";
       }
     }
 
     return error;
   }
 
+  useEffect(() => {
+    if (input.temperaments) {
+      setShowSelectError(false);
+    } else {
+      setShowSelectError(true);
+    }
+  }, [input.temperaments]);
+
   return (
     <div className={s.container}>
       <div className={s.container_raza}>
         <div className={s.titulo}>
-          <h2 className={s.h1NewDog}>Raza</h2>
+          <h2 className={s.h2NewDog}>Raza</h2>
         </div>
         <div className={s.container_info}>
           <div className={s.container_image}>
             <div className={s.container_foto}>
               <img
-                src={!input.image && image}
+                src={!input.image ? image : input.image}
                 id="preview-image"
-                alt="preview"
-              />
-            </div>
-            <div className={s.container_boton}>
-              <input
-                type="button"
-                value="Cambiar Imagen"
+                alt="Vista previa"
                 onClick={handleOpenWidget}
               />
             </div>
           </div>
           <div className={s.container_detalle}>
-            <div className={s.container_detalle_input}>
+            <div className={s.container_detalle_name}>
+              <label>Raza</label>
               <input
                 type="text"
                 className={s.input_name}
-                placeholder="Nombre Raza"
+                placeholder="Nombre de la raza"
                 name="name"
                 onChange={handleInputChange}
                 value={input.name}
@@ -270,10 +266,11 @@ export default function NewRaza() {
             </div>
             <div className={s.container_detalle_input}>
               <div className={s.container_input}>
+                <label>Altura mínima</label>
                 <input
                   type="number"
                   name="weight_min"
-                  placeholder="peso_min"
+                  placeholder="Peso mínimo"
                   className={s.detalle_input}
                   onChange={handleInputChange}
                   value={input.weight_min}
@@ -283,10 +280,11 @@ export default function NewRaza() {
                 )}
               </div>
               <div className={s.container_input}>
+                <label>Altura máxima</label>
                 <input
                   type="number"
                   name="weight_max"
-                  placeholder="peso_max"
+                  placeholder="Peso máximo"
                   className={s.detalle_input}
                   onChange={handleInputChange}
                   value={input.weight_max}
@@ -298,10 +296,11 @@ export default function NewRaza() {
             </div>
             <div className={s.container_detalle_input}>
               <div className={s.container_input}>
+                <label>Peso mínimo</label>
                 <input
                   type="number"
                   name="height_min"
-                  placeholder="altura_min"
+                  placeholder="Altura mínima"
                   className={s.detalle_input}
                   onChange={handleInputChange}
                   value={input.height_min}
@@ -311,10 +310,11 @@ export default function NewRaza() {
                 )}
               </div>
               <div className={s.container_input}>
+                <label>Peso máximo</label>
                 <input
                   type="number"
                   name="height_max"
-                  placeholder="altura_max"
+                  placeholder="Altura máxima"
                   className={s.detalle_input}
                   onChange={handleInputChange}
                   value={input.height_max}
@@ -326,10 +326,11 @@ export default function NewRaza() {
             </div>
             <div className={s.container_detalle_input}>
               <div className={s.container_input}>
+                <label>Año mínimo</label>
                 <input
                   type="number"
                   name="year_min"
-                  placeholder="año_min"
+                  placeholder="Año mínimo"
                   className={s.detalle_input}
                   onChange={handleInputChange}
                   value={input.year_min}
@@ -337,10 +338,11 @@ export default function NewRaza() {
                 {error.year_min && <p className={s.danger}>{error.year_min}</p>}
               </div>
               <div className={s.container_input}>
+                <label>Año máximo</label>
                 <input
                   type="number"
                   name="year_max"
-                  placeholder="año_max"
+                  placeholder="Año máximo"
                   className={s.detalle_input}
                   onChange={handleInputChange}
                   value={input.year_max}
@@ -350,45 +352,36 @@ export default function NewRaza() {
             </div>
           </div>
         </div>
-        <div className={s.container_temperament}>
-          <form action="#" className={s.formTemperaments}>
-            <select name="temperaments" id="temperaments">
-              <option key="0" id="0" value="Select a temperaments">
-                Select a temperaments
+      </div>
+      <div className={s.container_temperament}>
+        <form action="#" className={s.formTemperaments}>
+          <select id="temperaments" onChange={handleSubmitAdd}>
+            <option key="0" value="Temperamentos" />
+            {temperaments?.map((d) => (
+              <option key={d.id} value={d.id}>
+                {d.name}
               </option>
-              {temperaments?.map((d) => (
-                <option
-                  key={d.id}
-                  id={d.id}
-                  value={d.name}
-                  onClick={handleSubmitAdd}
-                >
-                  {d.name}
-                </option>
-              ))}
-            </select>
-            <div className={s.ErrorContainer}>
-              {error.temperaments && (
-                <p className={s.danger}>{error.temperaments[0]}</p>
-              )}
-            </div>
-          </form>
-          <div className={s.addTemperaments}>
-            {input.temperaments?.map((d) => (
-              <button
-                key={d.id}
-                className={s.btn}
-                value={d.value}
-                onClick={hanlerClose}
-              >
-                {" "}
-                {d.value}
-              </button>
             ))}
+          </select>
+          <div className={s.ErrorContainer}>
+            {showSelectError && (
+              <p className={s.danger}>Selecciona un temperamento</p>
+            )}
           </div>
+        </form>
+        <div className={s.addTemperaments}>
+          {input.temperaments?.map((d) => (
+            <button
+              key={d.id}
+              className={s.btn}
+              value={d.name}
+              onClick={() => hanlerClose(d.id)}
+            >
+              {" "}
+              {d.name}
+            </button>
+          ))}
         </div>
-        {/* <div className={s.container_select}></div>
-        <div className={s.container_temperament}></div> */}
         <div className={s.container_save}>
           <div className={s.container_boton}>
             <input type="button" value="Guardar" onClick={handleSubmit} />
@@ -398,158 +391,3 @@ export default function NewRaza() {
     </div>
   );
 }
-
-/* 
-<div className={s.container_raza}>
-        <div className={s.raza}>
-          <h2 className={s.h1NewDog}>New Raza</h2>
-        </div>
-        <div className={s.image_detalles}>
-          <div className={s.detalles}>
-            <div className={s.image}>
-              <img src={image} alt="not found" />
-              <div className={s.input_guardar}>
-                <input
-                  type="button"
-                  value="imagen"
-                  className={s.input_guardar}
-                />
-              </div>
-            </div>
-            <div className={s.inputs}>
-              <input
-                className={s.detailInput_name}
-                type="text"
-                name="name"
-                placeholder="Name Raza"
-                value={input.name}
-                onChange={handleInputChange}
-              />
-              {error.name && <p className={s.danger}>{error.name}</p>}
-              <input
-                className={s.detailInput}
-                type="text"
-                name="image"
-                placeholder="image"
-                value={input.image}
-                onChange={handleInputChange}
-              />
-              {error.image && <p className={s.danger}>{error.image}</p>}
-
-              <input
-                className={s.detailInput}
-                type="text"
-                name="weight_min"
-                placeholder="Peso Min"
-                value={input.weight_min}
-                onChange={handleInputChange}
-              />
-              {error.weight_min && (
-                <p className={s.danger}>{error.weight_min}</p>
-              )}
-
-              <input
-                className={s.detailInput}
-                name="weight_max"
-                type="number"
-                value={input.weight_max}
-                onChange={handleInputChange}
-              />
-              {error.weight_max && (
-                <p className={s.danger}>{error.weight_max}</p>
-              )}
-
-              <input
-                className={s.detailInput}
-                placeholder="height_min"
-                name="height_min"
-                type="text"
-                value={input.height_min}
-                onChange={handleInputChange}
-              />
-              {error.height_min && (
-                <p className={s.danger}>{error.height_min}</p>
-              )}
-
-              <input
-                className={s.detailInput}
-                placeholder="height max"
-                name="height_max"
-                type="text"
-                value={input.height_max}
-                onChange={handleInputChange}
-              />
-              {error.height_max && (
-                <p className={s.danger}>{error.height_max}</p>
-              )}
-
-              <input
-                className={s.detailInput}
-                name="year_min"
-                type="text"
-                value={input.year_min}
-                onChange={handleInputChange}
-              />
-              {error.year_min && <p className={s.danger}>{error.year_min}</p>}
-
-              <input
-                className={s.detailInput}
-                name="year_max"
-                type="text"
-                value={input.year_max}
-                onChange={handleInputChange}
-              />
-              {error.year_max && <p className={s.danger}>{error.year_max}</p>}
-            </div>
-          </div>
-        </div>
-      </div>
-      */
-
-/*
-      <div className={s.temperaments}>
-         <form action="#" className={s.formTemperaments}>
-          <select name="temperaments" id="temperaments">
-            <option key="0" id="0" value="Select a temperaments">
-              Select a temperaments
-            </option>
-            {temperaments?.map((d) => (
-              <option
-                key={d.id}
-                id={d.id}
-                value={d.name}
-                onClick={handleSubmitAdd}
-              >
-                {d.name}
-              </option>
-            ))}
-          </select>
-          <div className={s.ErrorContainer}>
-            {error.temperaments && (
-              <p className={s.danger}>{error.temperaments[0]}</p>
-            )}
-          </div>
-        </form>
-/*        <div className={s.addTemperaments}>
-          {input.temperaments?.map((d) => (
-            <button
-              key={d.id}
-              className={s.btn}
-              value={d.value}
-              onClick={hanlerClose}
-            >
-              {" "}
-              {d.value}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div className={s.containerBtn}>
-        <button className={s.btnSubmit} type="submit" onClick={handleSubmit}>
-          Submit
-        </button>
-      </div>
-      <div className={s.input_guardar}>
-        <input type="button" value="Guardar" />
-      </div>
-*/
