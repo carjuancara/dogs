@@ -7,7 +7,10 @@ const allTemperaments = async (req, res) => {
   try {
     const allTemperamentDB = await Temperaments.findAll()
     if (allTemperamentDB.length > 0) {
-      return res.status(200).json({ Message: 'List of temperaments', Temperaments: allTemperamentDB })
+      const allTemperaments = allTemperamentDB.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
+      return res.status(200).json({ Message: 'List of temperaments', Temperaments: allTemperaments })
     } else {
       const temperaments = await getApiTemperaments()
       await Temperaments.bulkCreate(temperaments)
