@@ -13,7 +13,7 @@ const handleDogsAll = async (req, res) => {
   const { name } = req.query
   try {
     if (!name) {
-    
+
       const apiAllRaza = await getAllRazaAPI()
       const dbAllRaza = await getAllRazaDB()
       const dbRaza = await cleanDB(dbAllRaza)
@@ -28,7 +28,7 @@ const handleDogsAll = async (req, res) => {
       return res.status(200).json(allNameRaza)
     }
   } catch (error) {
-    
+
     res.status(400).json({ message: error.message })
   }
 }
@@ -92,9 +92,22 @@ const handleDogCreate = async (req, res) => {
   }
 }
 
-
+const handleDogUpdate = async (req, res) => {
+  const { id, name, image, height_min, height_max, weight_min, weight_max, year_min, year_max, temperaments } = req.body
+  
+  const updateDog = Dog.update(
+    {
+      name, image, height_min, height_max, weight_min, weight_max, year_min, year_max, temperaments
+    }, {
+    where: {
+      id: id
+    }
+  })
+  res.status(200).json({msg:`la raza ${name} se ha actualizado!`})
+}
 module.exports = {
   handleDogsAll,
   handleDogById,
-  handleDogCreate
+  handleDogCreate,
+  handleDogUpdate
 }
