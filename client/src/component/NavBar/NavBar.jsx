@@ -1,20 +1,18 @@
-import React from "react";
 import s from "./NavBar.module.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import image from "../../image/icono.jpg";
-import { getRazaByName } from "../../redux/actions.js";
-
+import { useDogStore } from "../../store/dogStore-origin";
 export default function NavBar() {
   const [name, setName] = useState("");
-  const dispatch = useDispatch();
 
+  const { getRazaByName, cleanDogDetail } = useDogStore();
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    dispatch(getRazaByName(name));
+    getRazaByName(name);
+    setName('')
   };
+
 
   return (
     <div className={s.container}>
@@ -26,7 +24,7 @@ export default function NavBar() {
           <Link className={s.linkNav} to="/home">
             <li className={s.item}>Home</li>
           </Link>
-          <Link className={s.linkNav} to="/newdog">
+          <Link className={s.linkNav} onClick={()=>cleanDogDetail()} to="/newdog">
             <li className={s.item}>New Raza</li>
           </Link>
           <Link className={s.linkNav} to="/atribuciones">
@@ -39,7 +37,7 @@ export default function NavBar() {
             value={name}
             name="search"
             autoFocus
-            placeholder="Search Raza"
+            placeholder="Buscar Raza"
             type="text"
             onChange={(e) => {
               setName(e.target.value);
@@ -58,3 +56,4 @@ export default function NavBar() {
     </div>
   );
 }
+
