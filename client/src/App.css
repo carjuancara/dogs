@@ -1,38 +1,20 @@
 :root {
   --color-primary: #02c39a;
   --color-secondary: #028090;
-  --boton-fondo:#f3bc56;
+  --boton-fondo: #f3bc56;
 }
 
 .App {
   display: flex;
   flex-direction: column;
   text-align: center;
-  background-image: url('./image/background4.jpg');
-  background-repeat: no-repeat;
-  background-size:cover;
-  background-position: center;
   align-items: center;
   height: 100vh;
+  background-color: #202020;
+  color: white;
 }
 
-.btnPaginado {
-  margin-right: 10vw;
-  margin-left: 10vw;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  font-weight: bold;
-  background-color: var(--color-secondary);
-  width: 80vw;
-  padding-bottom: 20px;
-}
 
-.boton {
-  width: 190px;
-  height: 40px;
-  border-radius: 7px;
-  background-color: var(--boton-fondo);
-  font-weight: bold;
-  cursor: pointer;
+h1,h2,h3,h4,p{
+  color: white;
 }
