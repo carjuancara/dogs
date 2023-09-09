@@ -1,24 +1,23 @@
 import React, { useEffect } from "react";
 import s from "./CardDetail.module.css";
-import { Link, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getDogByID } from "../../redux/actions.js";
+import { useParams } from "react-router-dom";
+import { useDogStore } from "../../store/dogStore-origin";
 
 export default function CardDetail() {
   const { id } = useParams();
-  const dogDetail = useSelector((state) => state.dogDetail[0]);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
+  const { DogDetail, dogDetail } = useDogStore();
+console.log("id: ",id)
+   useEffect(() => {
     if (id.length > 6) {
-      dispatch(getDogByID("id", id));
+      DogDetail("id", parseInt(id));
     } else {
-      dispatch(getDogByID("ApiID", parseInt(id)));
+      DogDetail("ApiID", parseInt(id));
     }
-    /* return () => {
-      dispatch(removeDetail())
-    } */
-  }, [dispatch, id]);
+     /* return () => {
+      cleanDogDetail();
+    }; */ 
+  }, [DogDetail, id])
+   
 
   return (
     <div className={s.container}>
@@ -39,13 +38,14 @@ export default function CardDetail() {
           <div className={s.detalleItem}>
             <label htmlFor="a">
               Id:{" "}
-              <span>{dogDetail?.ApiID ? dogDetail?.ApiID : dogDetail?.id}</span>
+              <span>{dogDetail.ApiID ? dogDetail.ApiID : dogDetail.id}</span>
             </label>
           </div>
           <div className={s.detalleItem}>
-            <label htmlFor="a">
-              Temperaments: <span>{dogDetail?.temperament}</span>
-            </label>
+            <label htmlFor="a">Temperaments:</label>
+            <span className={dogDetail?.temperament > 35 ? s.isLarge : null}>
+              {dogDetail?.temperament}
+            </span>
           </div>
           <div className={s.detalleItem}>
             <label htmlFor="a">
@@ -64,17 +64,17 @@ export default function CardDetail() {
           </div>
         </div>
       </div>
-      
-        <Link className={s.btnPaginado} to="/updatedog/:id">
-          <button
-            className="boton"
-            type="submit"
-            onClick={(e) => dispatch(getDogByID(e.target.value))}
-          >
-            Modify Dog{" "}
-          </button>
-        </Link>
-      
+
+{/*       <Link className={s.btnPaginado} to={`/updatedog/${id}`}>
+        <button
+          className={s.boton}
+          type="submit"
+          onClick={() => {
+            DogDetail(id.length < 6 ? ("id", id) : ("ApiID", id))
+          }}>
+          Modify Dog
+        </button>
+      </Link> */}
     </div>
   );
 }
