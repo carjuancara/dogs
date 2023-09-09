@@ -5,16 +5,33 @@ const { Op } = require('sequelize');
 const { Dog, Temperaments } = require('../db');
 
 
+
 // obtener todas las razas de perros de la api
 const getAllRazaAPI = async () => {
-  let response;
+  /*  let response;
+   const {data:{message: listBrands}} = await axios('https://dog.ceo/api/breeds/list/all')
+   const brands = Object.keys(listBrands)
+   const arrayBrands = brands.map(brand => (
+     //`https://cdn2.thedogapi.com/images/`
+     `https://dog.ceo/api/breed/${brand}/images/random`
+     
+   ))
+   const allPhotos = await Promise.all(arrayBrands.map(async url => {
+     const response = await axios.get(url);
+     console.log(response.data)
+     return response.data.message;
+   })); */
+
   const allraza = await axios('https://api.thedogapi.com/v1/breeds')
   if (allraza.data.length > 0) {
-    response = allraza.data.map(raza => {
+    response = allraza.data.map((raza, i) => {
       return {
         ApiID: raza.id,
-        image: raza.image.url,
         name: raza.name.toLowerCase(),
+        image: `https://cdn2.thedogapi.com/images/${raza.reference_image_id}.jpg`
+          ? `https://cdn2.thedogapi.com/images/${raza.reference_image_id}.jpg`
+          : `https://cdn2.thedogapi.com/images/${raza.reference_image_id}.png`,
+        //image: allPhotos[i],
         height: raza.height.metric,
         weight: raza.weight.metric,
         temperament: raza.temperament,
@@ -34,6 +51,23 @@ const getAllRazaDB = async () => {
 // ------------------------------------------
 
 // limpiar datos { API }
+/*const cleanAPI = allRaza => {
+   return allRaza.map(raza => {
+    return {
+      ApiID: raza.id,
+      name: raza.name.toLowerCase(),
+      year: raza.life_span,
+      weight: raza.weight.metric,
+      height: raza.height.metric,
+      image: `https://cdn2.thedogapi.com/images/${raza.reference_image_id}.png` 
+      ? `https://cdn2.thedogapi.com/images/${raza.reference_image_id}.png` 
+      : `https://cdn2.thedogapi.com/images/${raza.reference_image_id}.jpg`,
+      temperament: raza.temperament
+    }
+  }) 
+}
+*/
+
 const cleanAPI = allRaza => {
   return allRaza.map(raza => {
     return {
@@ -42,11 +76,13 @@ const cleanAPI = allRaza => {
       year: raza.life_span,
       weight: raza.weight.metric,
       height: raza.height.metric,
-      image: raza.reference_image_id,
-      temperament:raza.temperament
+      image: raza.id !== 15 && raza.id !== 125 && raza.id !== 212 ? `https://cdn2.thedogapi.com/images/${raza.reference_image_id}.jpg` : `https://cdn2.thedogapi.com/images/${raza.reference_image_id}.png`,
+      temperament: raza.temperament
     }
-  })
-}
+  });
+};
+
+
 // limpiar datos { DB }
 const cleanDB = allRaza => {
   return allRaza.map(raza => {
@@ -57,7 +93,7 @@ const cleanDB = allRaza => {
       weight: raza.weight,
       height: raza.height,
       image: raza.image,
-      temperament:raza.temperaments?.map( t => t.name).toString()
+      temperament: raza.temperaments?.map(t => t.name).toString()
     }
   })
 }
@@ -71,7 +107,7 @@ const cleanDBid = raza => {
     weight: raza.weight,
     height: raza.height,
     image: raza.image,
-    temperament:raza.temperament?.map( t => t.name).toString()
+    temperament: raza.temperament?.map(t => t.name).toString()
   }
 }
 
@@ -88,7 +124,7 @@ const getDbNameRaza = async (name) => {
     where: {
       name: { [Op.substring]: name }
     },
-    include: Temperaments 
+    include: Temperaments
   }
   )
   return allRazaDB
@@ -102,12 +138,13 @@ const getApiIdDog = async (idRaza) => {
 
 // obtiene un dog de la DB
 const getBddIdDog = async (idRaza) => {
-  const bddDog = await Dog.findByPk(idRaza, {include: {
-    model: Temperaments,
-    through: {
-      attributes: []
+  const bddDog = await Dog.findByPk(idRaza, {
+    include: {
+      model: Temperaments,
+      through: {
+        attributes: []
+      }
     }
-  }
   })
 
   return bddDog
