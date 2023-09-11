@@ -1,17 +1,18 @@
-# Proyecto | **DOGS**
+# Proyecto | **DOGS v2**
 
 ## **📌 OBJETIVOS**
 
-- Construir una Single Page Application utlizando las tecnologías: **React**, **Zustand**, **Node**, **Express** y **Sequelize**.
-- Poner en práctica recursos básicos de estilos y diseño (UX : UI).
+- Construir una Single Page Application utlizando las tecnologías: **React**, **Zustand**, **Typescript**, **TailwindCss** ,**Node**, **Express** y **Sequelize**.
+- Prácticar TailwindCss (UX : UI).
 - Aprender mejores prácticas.
 - Aprender y practicar el workflow de GIT.
+- agregar typescript
 
 <br />
 
 ## **📖 ENUNCIADO GENERAL**
 
-La idea de este proyecto es construir una aplicación web a partir de la API [**TheDogApi**](https://thedogapi.com/) y en la que se pueda:
+La idea de este proyecto es mejorar los estilos y practicar typescript en la aplicación web de la DOG-V1
 
 - Buscar perros.
 - Visualizar la información de los perros.
@@ -141,9 +142,3 @@ Este formulario sera **controlado completamente con JavaScritp**. Debe contar co
 - Botón para crear la nueva raza.
 
 <br />
-
----
-
-> [**IMPORANTE**]: El formulario de creación sera validado sólo con JavaScript.Por ejemplo: que el nombre de la raza no pueda contener números, o que el peso/altura mínimo no pueda ser mayor al máximo.
-
-<!-- <img src="./dogs.jpg" alt="" width="1000px" /> -->
