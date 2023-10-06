@@ -9,8 +9,8 @@ import Cards from "./component/Cards/Cards";
 import CardDetail from "./component/CardDetail/CardDetail";
 import NewRaza from "./component/NewRaza/NewRaza";
 import Atribuciones from "./component/Atribuciones/Atribuciones";
-axios.defaults.baseURL = "http://localhost:3001/";
-//axios.defaults.baseURL = 'https://dogserver2.onrender.com'
+//axios.defaults.baseURL = "http://localhost:3001/";
+axios.defaults.baseURL = 'https://dogserver-io60.onrender.com'
 
 export default function App() {
   return (
