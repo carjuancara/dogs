@@ -1,7 +1,6 @@
 import React from "react";
 import s from "./Card.module.css";
 import { Link } from "react-router-dom";
-import { useDogStore } from "../../store/dogStore-origin";
 
 interface CardDetail {
   id:string,
@@ -11,7 +10,6 @@ interface CardDetail {
 }
 
 export default function Card(card:CardDetail) {
-  const {DogDetail} = useDogStore()
   return (
     <Link className={s.links} to={`/dogdetail/${card.id}`}>
       <div key={card.id} className={s.tarjetaContenedor}>
