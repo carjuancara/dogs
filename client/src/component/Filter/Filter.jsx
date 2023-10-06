@@ -65,8 +65,8 @@ export default function Filter() {
           options={["Select a temperament", ...temperaments.map((d) => d.name)]}
           value={selectedTemperament}
           onChange={async (e) => {
-            await setSelectedTemperament(e.target.value);
-            
+            await setSelectedTemperament(e.target.value);            
+
           }}
         />
         <FilterForm
@@ -74,8 +74,8 @@ export default function Filter() {
           options={["ALL", "ApiID", "DB"]}
           value={selectedOrigin}
           onChange={async (e) => {
-            await setSelectedOrigin(e.target.value);
-            
+            await setSelectedOrigin(e.target.value);            
+
           }}
         />
         <FilterForm
@@ -83,8 +83,8 @@ export default function Filter() {
           options={["ASC", "DES"]}
           value={selectedName}
           onChange={async (e) => {
-            await setSelectedName(e.target.value);
-            
+            await setSelectedName(e.target.value);  
+
           }}
         />
         <FilterForm
@@ -92,7 +92,7 @@ export default function Filter() {
           options={["ASC", "DES"]}
           value={selectedWeight}
           onChange={async (e) => {
-            await setSelectedWeight(e.target.value);
+            await setSelectedWeight(e.target.value);            
             
           }}
         />
