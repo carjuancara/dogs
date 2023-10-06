@@ -253,7 +253,7 @@ export default function NewRaza() {
           </div>
           <div className={s.container_detalle}>
             <div className={s.container_detalle_name}>
-              <label>Raza</label>
+              <br />
               <input
                 type="text"
                 className={s.input_name}
