@@ -118,7 +118,7 @@ export const useDogStore = create((set) => ({
     try {
       const response = await axios.get("/dogs");
       const allDog = response.data;
-      // Actualiza las imágenes en las posiciones 3, 5 y 10
+      // Actualiza las imágenes en las posiciones
      
       allDog[14].image = "https://cdn2.thedogapi.com/images/HkC31gcNm.png";
       allDog[89].image = "https://cdn2.thedogapi.com/images/B12uzg9V7.png";
