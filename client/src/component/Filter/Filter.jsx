@@ -59,7 +59,7 @@ export default function Filter() {
   return (
     <div className={s.container}>
       <div className={s.filters}>
-        <span className={s.title}>FILTERS</span>
+        <span className={s.title}>FILTROS</span>
         <FilterForm
           label="temperaments"
           options={["Select a temperament", ...temperaments.map((d) => d.name)]}
@@ -93,13 +93,13 @@ export default function Filter() {
           value={selectedWeight}
           onChange={async (e) => {
             await setSelectedWeight(e.target.value);            
-            
+
           }}
         />
         <input
           className={s.btn}
           type="button"
-          value="Restore All"
+          value="Restaurar Todos"
           onClick={() => restoreAllDogs()}
         />
       </div>
