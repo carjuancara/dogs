@@ -22,10 +22,10 @@ export default function NavBar() {
         </div>
         <div className={s.divItem}>
           <Link className={s.linkNav} to="/home">
-            <li className={s.item}>Home</li>
+            <li className={s.item}>Inicio</li>
           </Link>
           <Link className={s.linkNav} onClick={()=>cleanDogDetail()} to="/newdog">
-            <li className={s.item}>New Raza</li>
+            <li className={s.item}>Nueva Raza</li>
           </Link>
           <Link className={s.linkNav} to="/atribuciones">
             <li className={s.item}>Atribuciones</li>
