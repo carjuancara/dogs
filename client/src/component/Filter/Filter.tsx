@@ -106,7 +106,7 @@ export default function Filter() {
         <input
           className={s.btn}
           type="button"
-          value="Restore All"
+          value="Restaurar Todos"
           onClick={() => restoreAllDogs()}
         />
       </div>
