@@ -48,7 +48,7 @@ export default function NavBar() {
           <input
             className={s.inputButton}
             type="button"
-            value="Search"
+            value="Buscar"
             onClick={handleSubmit}
           />
         </form>
