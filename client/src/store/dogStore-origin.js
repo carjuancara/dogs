@@ -118,11 +118,18 @@ export const useDogStore = create((set) => ({
     try {
       const response = await axios.get("/dogs");
       const allDog = response.data;
+      // Actualiza las imágenes en las posiciones 3, 5 y 10
+     
+      allDog[14].image = "https://cdn2.thedogapi.com/images/HkC31gcNm.png";
+      allDog[89].image = "https://cdn2.thedogapi.com/images/B12uzg9V7.png";
+      allDog[136].image = "https://cdn2.thedogapi.com/images/_Qf9nfRzL.png";
+
       set(state => ({
         ...state,
         allDog,
-        backupDog: allDog
-      }));
+        backupDog: allDog,
+      }),
+      );
     } catch (error) {
       console.error("Error fetching dog data:", error.message);
     }
