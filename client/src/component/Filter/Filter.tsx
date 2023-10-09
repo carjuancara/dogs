@@ -30,7 +30,7 @@ export default function Filter() {
   const [selectedTemperament, setSelectedTemperament] = useState(
     "Select a temperament"
   );
-
+  
   const {
     temperaments,
     filterByTemperaments,
@@ -60,7 +60,7 @@ export default function Filter() {
   }, [selectedName, sortByName]);
 
   useEffect(() => {
-    sortByWeight(selectedWeight);
+    sortByWeight(selectedWeight)
   }, [selectedWeight, sortByWeight]);
 
   return (

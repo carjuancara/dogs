@@ -43,11 +43,16 @@ export default function Cards() {
     }
   };
 
-  const handleGoToPage = (event) => {
-    const pageNumber = parseInt(event.target.value);
+  const handleGoToPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const pageNumber = parseInt(event.currentTarget.value);
     if (!isNaN(pageNumber) && pageNumber >= 1 && pageNumber <= totalPages) {
       GoToPage(pageNumber);
     }
+  };
+    
+  const handleInputClick = (event: React.MouseEvent<HTMLInputElement>) => {
+    // Selecciona todo el texto del input al hacer clic en él
+    event.currentTarget.select();
   };
 
   useEffect(() => {
@@ -68,11 +73,12 @@ export default function Cards() {
         {currentDogs?.map((d) => (
           <Card
             key={d.id ? d.id : d.ApiID}
-            id={d.id ? d.id : d.ApiID}
+            id={String(d.id ? d.id : d.ApiID)}
             name={d.name}
             image={d.image}
             year={d.year}
-            temperament={d.temperament}
+            temperament={typeof d.temperament === 'string' ? d.temperament.split(',') : d.temperament}
+            //temperament={d.temperament}
           />
         ))}
       </div>
@@ -80,10 +86,6 @@ export default function Cards() {
         <button className={s.boton} onClick={handlePrevPage}>
           {"<< Anterior "}
         </button>
-
-        {/* <button className={s.boton} onClick={handleGoToPage}>
-          {" Pagina Actual "}
-        </button> */}
         <button className={s.boton} onClick={handleNextPage}>
           {" Siguiente >>"}
         </button>
@@ -93,6 +95,7 @@ export default function Cards() {
           type="text"
           value={currentPage}
           onChange={handleGoToPage}
+          onClick={handleInputClick}
         />
         <p>
           Page {currentPage} of {totalPages}

@@ -3,21 +3,20 @@ import s from "./CardDetail.module.css";
 import { useParams } from "react-router-dom";
 import { useDogStore } from "../../store/dogStore-origin";
 
+
+
 export default function CardDetail() {
   const { id } = useParams();
   const { DogDetail, dogDetail } = useDogStore();
-console.log("id: ",id)
-   useEffect(() => {
-    if (id.length > 6) {
+
+  useEffect(() => {
+    if (id && id.length > 6) {
       DogDetail("id", parseInt(id));
-    } else {
+    } else if (id !== undefined) {
       DogDetail("ApiID", parseInt(id));
     }
-     /* return () => {
-      cleanDogDetail();
-    }; */ 
   }, [DogDetail, id])
-   
+
 
   return (
     <div className={s.container}>
@@ -43,7 +42,7 @@ console.log("id: ",id)
           </div>
           <div className={s.detalleItem}>
             <label htmlFor="a">Temperaments:</label>
-            <span className={dogDetail?.temperament > 35 ? s.isLarge : null}>
+            <span className={dogDetail?.temperament.length > 35 ? s.isLarge : ""}>
               {dogDetail?.temperament}
             </span>
           </div>
@@ -65,7 +64,7 @@ console.log("id: ",id)
         </div>
       </div>
 
-{/*       <Link className={s.btnPaginado} to={`/updatedog/${id}`}>
+      {/*       <Link className={s.btnPaginado} to={`/updatedog/${id}`}>
         <button
           className={s.boton}
           type="submit"

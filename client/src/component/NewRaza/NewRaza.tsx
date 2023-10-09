@@ -1,14 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useDogStore } from "../../store/dogStore-origin";
 import s from "./NewRaza.module.css";
 import axios from "axios";
 import image from "../../image/icono.jpg";
 
+
+
+
+interface Temperament {
+  id: number;
+  name: string;
+}
+
+interface InputInterface {
+  id: number;
+  name: string;
+  image: string;
+  weight_min: number;
+  weight_max: number;
+  height_min: number;
+  height_max: number;
+  year_min: number;
+  year_max: number;
+  temperaments: Temperament[];
+}
+
+interface ValidationError {
+  name?: string;
+  weight_min?: string;
+  weight_max?: string;
+  year_min?: string;
+  year_max?: string;
+  height_min?: string;
+  height_max?: string;
+}
+
 export default function NewRaza() {
   const { temperaments } = useDogStore();
-  const [error, setError] = useState({});
+  const [error, setError] = useState<ValidationError>({});
   const [showSelectError, setShowSelectError] = useState(false);
-  const [input, setInput] = useState({
+  const [input, setInput] = useState<InputInterface>({
+    id: 0,
     name: "",
     image: "",
     weight_min: 0,
@@ -20,7 +52,34 @@ export default function NewRaza() {
     temperaments: [],
   });
 
-  const handleSubmit = async (e) => {
+  const handleOpenWidget = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const previewImage = document.getElementById("preview-image") as HTMLImageElement;
+
+    let myWidget = await (window as any).cloudinary.createUploadWidget(
+      {
+        cloudName: "dezvujzed",
+        uploadPreset: "ymjvjtup",
+      },
+      (error: any, result: any) => {
+        if (!error && result && result.event === "success") {
+          const imageUrl = result.info.url;
+
+          setInput((prevInput: InputInterface) => ({
+            ...prevInput,
+            image: imageUrl,
+          }));
+
+          previewImage.src = imageUrl;
+          previewImage.alt = "Vista previa de la imagen";
+        }
+      }
+    );
+
+    myWidget.open();
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const newDog = async () => {
@@ -45,16 +104,18 @@ export default function NewRaza() {
           height_max,
           year_min,
           year_max,
-          temperaments: temperaments.map((t) => parseInt(t.id)),
+          temperaments: temperaments.map((t) => t.id),
         });
         return result;
       };
-      if (Object.entries(error).length > 0) {
+
+      if (Object.keys(error).length > 0) {
         alert("ERROR: Faltan datos");
       } else {
         const message = await newDog();
         alert(message.data.message);
         setInput({
+          id: 0,
           name: "",
           image: "",
           weight_min: 0,
@@ -71,47 +132,97 @@ export default function NewRaza() {
     }
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
 
-    setError(
-      validate({
-        ...input,
-        [e.target.name]: e.target.value,
-      })
-    );
+    setInput((prevInput) => ({
+      ...prevInput,
+      [name]: value,
+    }));
+
+    setError((prevError) => ({
+      ...prevError,
+      [name]: validateField(name, value),
+    }));
   };
 
-  const handleSubmitAdd = (e) => {
+  const validateField = (name: string, value: string): string | undefined => {
+    switch (name) {
+      case "name":
+        if (!value) return "Es requerido";
+        if (!/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/\+~%\/.\w-_]*)?\??(?:\+=&;%@.\w_]*)#?(?:[\w]*))?)/.test(value)) {
+          return "Es inválido";
+        }
+        return undefined;
+      case "weight_min":
+      case "weight_max":
+      case "year_min":
+      case "year_max":
+      case "height_min":
+      case "height_max":
+        if (!value) return "Es requerido";
+        if (!/^[0-9]+$/i.test(value)) return "Es inválido";
+        const numValue = parseInt(value);
+        if (numValue < 1 || numValue > 100) return "Rango de 1 a 100";
+        return undefined;
+      default:
+        return undefined;
+    }
+  };
+
+  /* const handleSubmitAdd = (e: ChangeEvent<HTMLSelectElement>) => {
+    e.preventDefault();
+    const temperamentId = parseInt(e.target.value);
+ 
+    const yaAgregado = input.temperaments.some(
+      (temperamento) => temperamento.id === temperamentId
+    );
+ 
+    if (!yaAgregado && temperamentId !== 0) {
+      const temperamentoSeleccionado = temperaments.find(
+        (temperamento) => temperamento.id === temperamentId
+      );
+ 
+      setInput((inputAnterior) => ({
+        ...inputAnterior,
+        temperaments: [...inputAnterior.temperaments, temperamentoSeleccionado],
+      }));
+    }
+ 
+    if (showSelectError) {
+      setShowSelectError(false);
+    }
+  }; */
+
+  const handleSubmitAdd = (e: ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
     const temperamentId = parseInt(e.target.value);
 
-    const yaAgregado = input.temperaments
-      ? input.temperaments.some(
-          (temperamento) => temperamento.id === temperamentId
-        )
-      : null;
+    const yaAgregado = input.temperaments.some(
+      (temperamento) => temperamento.id === temperamentId
+    );
 
     if (!yaAgregado && temperamentId !== 0) {
       const temperamentoSeleccionado = temperaments.find(
         (temperamento) => temperamento.id === temperamentId
       );
 
-      setInput((inputAnterior) => ({
-        ...inputAnterior,
-        temperaments: [...inputAnterior.temperaments, temperamentoSeleccionado],
-      }));
+      if (temperamentoSeleccionado) {
+        setInput((inputAnterior) => ({
+          ...inputAnterior,
+          temperaments: [...inputAnterior.temperaments, temperamentoSeleccionado],
+        }));
+      }
     }
+
     if (showSelectError) {
       setShowSelectError(false);
     }
   };
 
-  const hanlerClose = (temperamentoId) => {
+
+  const hanlerClose = (temperamentoId: number) => {
     setInput((prevInput) => ({
       ...prevInput,
       temperaments: prevInput.temperaments.filter(
@@ -119,120 +230,6 @@ export default function NewRaza() {
       ),
     }));
   };
-
-  const handleOpenWidget = async (e) => {
-    e.preventDefault();
-    const previewImage = document.getElementById("preview-image");
-    let myWidget = await window.cloudinary.createUploadWidget(
-      {
-        cloudName: "dezvujzed",
-        uploadPreset: "ymjvjtup",
-      },
-      (error, result) => {
-        if (!error && result && result.event === "success") {
-          const imageUrl = result.info.url;
-
-          setInput((prevInput) => ({
-            ...prevInput,
-            image: imageUrl,
-          }));
-
-          previewImage.src = imageUrl;
-          previewImage.alt = "Vista previa de la imagen";
-        }
-      }
-    );
-
-    myWidget.open();
-  };
-
-  function validate(input) {
-    let error = {};
-
-    if (!input.name) {
-      error.name = "es requerido";
-    } else if (
-      /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/\+~%\/.\w-_]*)?\??(?:\+=&;%@.\w_]*)#?(?:[\w]*))?)/.test(
-        input.name
-      )
-    ) {
-      error.name = "es inválido";
-    }
-
-    if (!input.weight_min) {
-      error.weight_min = "es requerido";
-    } else if (!/[0-9]+/i.test(input.weight_min)) {
-      error.weight_min = "es inválido";
-    } else {
-      if (input.weight_min < 1 || input.weight_min > 100) {
-        error.weight_min = "rango de 1 a 100";
-      }
-    }
-
-    if (!input.weight_max) {
-      error.weight_max = "es requerido";
-    } else if (!/[0-9]+/i.test(input.weight_max)) {
-      error.weight_max = "es inválido";
-    } else {
-      if (input.weight_max < 1 || input.weight_max > 100) {
-        error.weight_max = "rango de 1 a 100";
-      }
-    }
-
-    if (!showSelectError) {
-      setShowSelectError(false);
-    }
-
-    if (!input.year_min) {
-      error.year_min = "es requerido";
-    } else if (!/[0-9]+/i.test(input.year_min)) {
-      error.year_min = "es inválido";
-    } else {
-      if (input.year_min < 1 || input.year_min > 50) {
-        error.year_min = "rango de 1 a 50";
-      }
-    }
-
-    if (!input.year_max) {
-      error.year_max = "es requerido";
-    } else if (!/[0-9]+/i.test(input.year_max)) {
-      error.year_max = "es inválido";
-    } else {
-      if (input.year_max < 1 || input.year_max > 50) {
-        error.year_max = "rango de 1 a 50";
-      }
-    }
-
-    if (!input.height_min) {
-      error.height_min = "es requerido";
-    } else if (!/[0-9]+/i.test(input.height_min)) {
-      error.height_min = "es inválido";
-    } else {
-      if (input.height_min < 1 || input.height_min > 100) {
-        error.height_min = "rango de 1 a 100";
-      }
-    }
-
-    if (!input.height_max) {
-      error.height_max = "es requerido";
-    } else if (!/[0-9]+/i.test(input.height_max)) {
-      error.height_max = "es inválido";
-    } else {
-      if (input.height_max < 1 || input.height_max > 100) {
-        error.height_max = "rango de 1 a 100";
-      }
-    }
-
-    return error;
-  }
-
-  useEffect(() => {
-    if (input.temperaments) {
-      setShowSelectError(false);
-    } else {
-      setShowSelectError(true);
-    }
-  }, [input.temperaments]);
 
   return (
     <div className={s.container}>
@@ -243,12 +240,13 @@ export default function NewRaza() {
         <div className={s.container_info}>
           <div className={s.container_image}>
             <div className={s.container_foto}>
-              <img
-                src={!input.image ? image : input.image}
-                id="preview-image"
-                alt="Vista previa"
-                onClick={handleOpenWidget}
-              />
+              <button onClick={handleOpenWidget}>
+                <img
+                  src={!input.image ? image : input.image}
+                  id="preview-image"
+                  alt="Vista previa"
+                />
+              </button>
             </div>
           </div>
           <div className={s.container_detalle}>
@@ -262,6 +260,8 @@ export default function NewRaza() {
                 onChange={handleInputChange}
                 value={input.name}
               />
+              {/* {error.name && typeof error.name === 'string' && <p className={s.danger}>{error.name}</p>} */}
+
               {error.name && <p className={s.danger}>{error.name}</p>}
             </div>
             <div className={s.container_detalle_input}>
@@ -354,7 +354,7 @@ export default function NewRaza() {
         </div>
       </div>
       <div className={s.container_temperament}>
-        <form action="#" className={s.formTemperaments}>
+        <form onSubmit={handleSubmit} action="#" className={s.formTemperaments}>
           <select id="temperaments" onChange={handleSubmitAdd}>
             <option key="0" value="Temperamentos" />
             {temperaments?.map((d) => (
@@ -384,7 +384,7 @@ export default function NewRaza() {
         </div>
         <div className={s.container_save}>
           <div className={s.container_boton}>
-            <input type="button" value="Guardar" onClick={handleSubmit} />
+            <input type="submit" value="Guardar" />
           </div>
         </div>
       </div>

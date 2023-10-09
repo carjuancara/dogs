@@ -7,7 +7,7 @@ export default function NavBar() {
   const [name, setName] = useState("");
 
   const { getRazaByName, cleanDogDetail } = useDogStore();
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     getRazaByName(name);
     setName('')
@@ -43,13 +43,6 @@ export default function NavBar() {
               setName(e.target.value);
             }}
             autoComplete="off"
-          />
-
-          <input
-            className={s.inputButton}
-            type="button"
-            value="Buscar"
-            onClick={handleSubmit}
           />
         </form>
       </nav>

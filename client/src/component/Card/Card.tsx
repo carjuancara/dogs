@@ -6,7 +6,8 @@ interface CardDetail {
   id:string,
   name:string,
   image:string,
-  temperament:string[]
+  temperament:string[],
+  year:string
 }
 
 export default function Card(card:CardDetail) {
