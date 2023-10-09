@@ -86,9 +86,6 @@ export default function Cards() {
         <button className={s.boton} onClick={handlePrevPage}>
           {"<< Anterior "}
         </button>
-        <button className={s.boton} onClick={handleNextPage}>
-          {" Siguiente >>"}
-        </button>
         <input
           className={s.page}
           style={{ width: "100px" }}
@@ -97,6 +94,9 @@ export default function Cards() {
           onChange={handleGoToPage}
           onClick={handleInputClick}
         />
+        <button className={s.boton} onClick={handleNextPage}>
+          {" Siguiente >>"}
+        </button>
         <p>
           Page {currentPage} of {totalPages}
         </p>
