@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import s from "./Filter.module.css";
 import { useDogStore } from '../../store/dogStore-origin';
 
 interface Filters {
@@ -11,7 +10,7 @@ interface Filters {
 
 function FilterForm(prop: Filters) {
   return (
-    <form className={s.formFilter}>
+    <form className="flex border-4 rounded-lg bg-gray-900 font-bold text-black"> {/* formFilter */}
       <select name={prop.label} value={prop.value} onChange={prop.onChange}>
         {prop.options.map((opt) => (
           <option key={opt} value={opt}>
@@ -64,9 +63,9 @@ export default function Filter() {
   }, [selectedWeight, sortByWeight]);
 
   return (
-    <div className={s.container}>
-      <div className={s.filters}>
-        <span className={s.title}>FILTERS</span>
+    <div className="flex bg-gray-800 h-14 "> {/* container */}
+      <div className="flex text-lg items-center w-4/5 no-underline list-none justify-evenly"> {/* filters */}
+        <span className=" ml-32 text-3xl text-white font-bold">FILTERS</span> {/* title */}
         <FilterForm
           label="temperaments"
           options={["Select a temperament", ...temperaments.map((t: any) => t.name)]}
@@ -104,7 +103,7 @@ export default function Filter() {
           }}
         />
         <input
-          className={s.btn}
+          className=" ml-1 font-bold rounded-lg bg-yellow-500 px-lg w-44 h-8 cursor-pointer"
           type="button"
           value="Restaurar Todos"
           onClick={() => restoreAllDogs()}
