@@ -1,7 +1,6 @@
 import React from "react";
-import s from "./Cards.module.css";
-import { useEffect } from "react";
 
+import { useEffect } from "react";
 import Card from "../Card/Card";
 import { useDogStore } from "../../store/dogStore-origin";
 
@@ -15,7 +14,7 @@ export default function Cards() {
     UpdateCurrentPage,
   } = useDogStore();
   //const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 6  ;
 
   // Calculamos el rango de imágenes a mostrar según la paginación
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -49,7 +48,7 @@ export default function Cards() {
       GoToPage(pageNumber);
     }
   };
-    
+
   const handleInputClick = (event: React.MouseEvent<HTMLInputElement>) => {
     // Selecciona todo el texto del input al hacer clic en él
     event.currentTarget.select();
@@ -68,39 +67,50 @@ export default function Cards() {
     //currentDogs = allDog;
   }, [allDog]); */
   return (
-    <div>
-      <div className={s.container}>
-        {currentDogs?.map((d) => (
-          <Card
-            key={d.id ? d.id : d.ApiID}
-            id={String(d.id ? d.id : d.ApiID)}
-            name={d.name}
-            image={d.image}
-            year={d.year}
-            temperament={typeof d.temperament === 'string' ? d.temperament.split(',') : d.temperament}
-            //temperament={d.temperament}
+<div className="p-5 min-h-screen bg-gray-100 dark:bg-gray-800">
+      <div className="container mx-auto py-1 px-2 sm:px-2 lg:px-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+          {currentDogs?.map((d) => (
+            <Card
+              key={d.id ? d.id : d.ApiID}
+              id={String(d.id ? d.id : d.ApiID)}
+              name={d.name}
+              image={d.image}
+              year={d.year}
+              temperament={
+                typeof d.temperament === "string"
+                  ? d.temperament.split(",")
+                  : d.temperament
+              }
+            />
+          ))}
+        </div>
+        <div className="flex mt-5 w-4/5 mx-auto justify-center items-center font-bold py-4 gap-12">
+          <button
+            className="w-44 h-10 rounded-md font-bold bg-amber-400 cursor-pointer"
+            onClick={handlePrevPage}
+          >
+            {"<< Anterior "}
+          </button>
+          <input
+            className="flex text-center w-20 justify-center items-center rounded-lg text-black"
+            //style={{ width: "70px" }}
+            type="text"
+            value={currentPage}
+            onChange={handleGoToPage}
+            onClick={handleInputClick}
           />
-        ))}
+          <button
+            className="w-44 h-10 rounded-md font-bold bg-amber-400 cursor-pointer"
+            onClick={handleNextPage}
+          >
+            {" Siguiente >>"}
+          </button>
+          <p className="text-white">
+            Page {currentPage} of {totalPages}
+          </p>
+        </div>
       </div>
-      <div className={s.btnPaginado}>
-        <button className={s.boton} onClick={handlePrevPage}>
-          {"<< Anterior "}
-        </button>
-        <input
-          className={s.page}
-          style={{ width: "100px" }}
-          type="text"
-          value={currentPage}
-          onChange={handleGoToPage}
-          onClick={handleInputClick}
-        />
-        <button className={s.boton} onClick={handleNextPage}>
-          {" Siguiente >>"}
-        </button>
-        <p>
-          Page {currentPage} of {totalPages}
-        </p>
-      </div>
-    </div>
-  );
+    </div>    
+)
 }
