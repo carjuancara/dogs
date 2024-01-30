@@ -42,23 +42,13 @@ interface useDog {
 export const useDogStore = create<useDog>()((set) => ({
   allDog: [], //todas las razas de perros
   backupDog: [], // una copia de las razas de perros  
-  dogDetail: {
-    image: "",
-    name: "",
-    ApiID: 0,
-    id: "",
-    temperament: "",
-    weight: "",
-    height: "",
-    year: ""
-  }, // los detallas de una raza
   currentPage: 1, // pagina actual 
   temperaments: [], // listado de todos los temperamentos de las razas de perro
   temperamentByRaza: [], //listado de los temperamentos con sus ID cargarlos en div
   filterTemperaments: "ALL", // FILTRO todos los temperamentos
   filterWeight: "ASC",  // FILTRO raza por peso ascendente
   filterName: "ASC",  // FILTRO raza por nombre ascendente
-  filterOrigin: "ALL", // FILTRO de raza por origen: API | DB
+  filterOrigin: "ALL", // FILTRO de raza por origen: API | DB | ALL
   UpdateCurrentPage: (value: number) => {
     set((state: useDog) => ({
       currentPage: state.currentPage + value
