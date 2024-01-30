@@ -5,7 +5,8 @@ import { useDogStore } from "../../store/dogStore-origin";
 export default function NavBar() {
   const [name, setName] = useState("");
   const location = useLocation().pathname
-  const { getRazaByName, cleanDogDetail } = useDogStore();
+  const { getRazaByName} = useDogStore();
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     getRazaByName(name);
@@ -96,7 +97,7 @@ export default function NavBar() {
                   </Link>
                 </li>
                 <li>
-                  <Link onClick={() => cleanDogDetail()} to="/newdog">
+                  <Link to="/newdog">
                     <span className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:bg-gray-800">Nueva Raza</span>
                   </Link>
                 </li>
