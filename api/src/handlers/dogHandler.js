@@ -1,26 +1,24 @@
-require('dotenv').config();
-const { API_KEY } = process.env;
-const axios = require('axios');
 const { Dog } = require('../db');
-const { getAllRazaAPI, getAllRazaDB, getApiNameRaza, getDbNameRaza, getApiIdDog, getBddIdDog, cleanDB, cleanDBid } = require('../controllers/dogControllers');
 
+// API controllers
+const { getAllRazaAPI, getApiIdDog, getApiNameRaza } = require('../controllers/ApiDogController')
 
-/* 
-📍 GET | /dogs
-Obtiene un arreglo de objetos, donde cada objeto es la raza de un perro.
-*/
+// DB controllers
+const {getAllRazaDB, getDbNameRaza, getBddIdDog, cleanDB, cleanDBid} = require('../controllers/DbDogController')
+
+// trae todos las razas de perros (DB y API)
 const handleDogsAll = async (req, res) => {
   const { name } = req.query
   try {
     if (!name) {
-
+      
       const apiAllRaza = await getAllRazaAPI()
       const dbAllRaza = await getAllRazaDB()
       const dbRaza = await cleanDB(dbAllRaza)
       const allRaza = [...apiAllRaza, ...dbRaza]
       return res.status(200).json(allRaza)
+      
     } else {
-
       const apiNameRaza = await getApiNameRaza(name.toLowerCase())
       const dbNameRaza = await getDbNameRaza(name.toLowerCase())
       const dbAllName = await cleanDB(dbNameRaza)
@@ -28,34 +26,27 @@ const handleDogsAll = async (req, res) => {
       return res.status(200).json(allNameRaza)
     }
   } catch (error) {
-
     res.status(400).json({ message: error.message })
   }
 }
-
-
-// -------------------------------------------------------
-
-
+// trae una raza de perro de (DB o API)
 const handleDogById = async (req, res) => {
   const { idRaza } = req.params;
-
+  console.log('linea 42: idRaza', idRaza, "es de tipo String: ", typeof idRaza ==='string')
   try {
     let findDog;
-    if (idRaza.length < 4) {
-      findDog = await getApiIdDog(idRaza)
-    } else {
+    if (idRaza.length === 36) {
       findDog = await getBddIdDog(idRaza)
       findDog = cleanDBid(findDog)
+    } else {
+      findDog = await getApiIdDog(idRaza)
     }
     return res.status(200).json(findDog)
   } catch (error) {
     res.status(400).json({ Error: error.message })
   }
 }
-
-
-
+// crea una raza de perros nueva en la DB
 const handleDogCreate = async (req, res) => {
   const { name, image, height_min, height_max, weight_min, weight_max, year_min, year_max, temperaments } = req.body;
   try {
@@ -91,7 +82,7 @@ const handleDogCreate = async (req, res) => {
     return res.status(400).json({ Error: error.message })
   }
 }
-
+// modifica una raza de perros (solo de DB)
 const handleDogUpdate = async (req, res) => {
   const { id, name, image, height_min, height_max, weight_min, weight_max, year_min, year_max, temperaments } = req.body
   
