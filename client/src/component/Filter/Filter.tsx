@@ -19,7 +19,7 @@ function FilterForm(prop: Filters) {
         ))}
       </select>
     </form>
-  );
+  )
 }
 
 export default function Filter() {
