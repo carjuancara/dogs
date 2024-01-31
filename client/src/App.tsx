@@ -8,6 +8,7 @@ import Cards from "./component/Cards/Cards";
 import CardDetail from "./component/CardDetail/CardDetail";
 import NewRaza from "./component/NewRaza/NewRaza";
 import Atribuciones from "./component/Atribuciones/Atribuciones";
+import Paginated from './component/Paginated/Paginated';
 axios.defaults.baseURL = "http://localhost:3001/";
 //axios.defaults.baseURL = 'https://dogserver-io60.onrender.com'
 
@@ -19,11 +20,12 @@ export default function App() {
         <Route
           path="/home"
           element={
-            <>
+            <div className='bg-gray-800 h-screen'>
               <NavBar />
               <Filter />
               <Cards />
-            </>
+              <Paginated />
+            </div>
           }
         />
         <Route
