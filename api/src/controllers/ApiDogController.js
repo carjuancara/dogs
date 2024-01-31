@@ -6,19 +6,7 @@ const { Op } = require('sequelize');
 
 // obtener todas las razas de perros de la api
 const getAllRazaAPI = async () => {
-    /*  let response;
-     const {data:{message: listBrands}} = await axios('https://dog.ceo/api/breeds/list/all')
-     const brands = Object.keys(listBrands)
-     const arrayBrands = brands.map(brand => (
-       //`https://cdn2.thedogapi.com/images/`
-       `https://dog.ceo/api/breed/${brand}/images/random`
-       
-     ))
-     const allPhotos = await Promise.all(arrayBrands.map(async url => {
-       const response = await axios.get(url);
-       console.log(response.data)
-       return response.data.message;
-     })); */
+   
   
     const allraza = await axios('https://api.thedogapi.com/v1/breeds')
     if (allraza.data.length > 0) {
@@ -38,7 +26,7 @@ const getAllRazaAPI = async () => {
       })
     }
     return response
-  } // -----------------------------------------------
+  } 
 
 
 
@@ -81,26 +69,6 @@ const getApiIdDog = async (idRaza) => {
     const cleanedAPI = await cleanAPI(apiDogs.data)
     return cleanedAPI
   }
-
-
-
-// limpiar datos { API }
-/*const cleanAPI = allRaza => {
-   return allRaza.map(raza => {
-    return {
-      ApiID: raza.id,
-      name: raza.name.toLowerCase(),
-      year: raza.life_span,
-      weight: raza.weight.metric,
-      height: raza.height.metric,
-      image: `https://cdn2.thedogapi.com/images/${raza.reference_image_id}.png` 
-      ? `https://cdn2.thedogapi.com/images/${raza.reference_image_id}.png` 
-      : `https://cdn2.thedogapi.com/images/${raza.reference_image_id}.jpg`,
-      temperament: raza.temperament
-    }
-  }) 
-}
-*/
 
 module.exports = {
     getAllRazaAPI,
