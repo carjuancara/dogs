@@ -28,7 +28,9 @@ interface useDog {
   filterName: string;
   filterOrigin: string;
   UpdateCurrentPage: (value: number) => void;
+  prevPage:() => void;
   GoToPage: (value: number) => void;
+  nextPage:() => void;
   searchTemperaments: (temp: []) => void;
   restoreAllDogs: () => void;
   filterByOrigin: (origin: string) => void;
@@ -54,9 +56,19 @@ export const useDogStore = create<useDog>()((set) => ({
       currentPage: state.currentPage + value
     }))
   },
+  prevPage: () => {
+    set((state) => ({
+      currentPage: state.currentPage -1
+    }))
+  },
   GoToPage: (value: number) => {
     set(() => ({
       currentPage: value
+    }))
+  },
+  nextPage: () =>{
+    set(state => ({
+        currentPage: state.currentPage + 1
     }))
   },
   searchTemperaments: (temp: string[]) => set((state) => {
