@@ -48,11 +48,44 @@ const handleDogById = async (req, res) => {
 }
 // crea una raza de perros nueva en la DB
 const handleDogCreate = async (req, res) => {
-  const { name, image, height_min, height_max, weight_min, weight_max, year_min, year_max, temperaments } = req.body;
+  const { name, 
+    image, 
+    height_min, 
+    height_max, 
+    weight_min, 
+    weight_max, 
+    year_min, 
+    year_max, 
+    temperaments 
+  } = req.body;
   try {
     let newDog;
-    if (!name || !image || !height_min || !height_max || !weight_min || !weight_max || !year_min || !year_max || temperaments.length === 0) {
-      return res.status(400).json({ Error: 'Missing data', data: { name, image, height_min, height_max, weight_max, weight_min, year_max, year_min, temperaments } })
+    if (
+      !name || 
+      !image || 
+      !height_min || 
+      !height_max || 
+      !weight_min || 
+      !weight_max || 
+      !year_min || 
+      !year_max || 
+      temperaments.length === 0) {
+      return res.status(400).json(
+        { 
+          Error: 'Missing data', 
+          data: { 
+            name, 
+            image, 
+            height_min, 
+            height_max, 
+            weight_max, 
+            weight_min, 
+            year_max, 
+            year_min, 
+            temperaments 
+          }
+        }
+      )
     } else {
       const itDog = await Dog.findOne({
         where: {
