@@ -53,7 +53,6 @@ const getDbNameRaza = async (name) => {
 
 // obtiene un dog de la DB
 const getBddIdDog = async (idRaza) => {
-  console.log('linea 141: dogControllers')
   const bddDog = await Dog.findByPk(idRaza, {
     include: {
       model: Temperaments,
@@ -62,7 +61,6 @@ const getBddIdDog = async (idRaza) => {
       }
     }
   })
-  console.log('DB_by_id: ', bddDog.toJSON())
   return bddDog
 }
 
